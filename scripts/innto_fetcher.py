@@ -11,6 +11,11 @@ from playwright.sync_api import Page, TimeoutError as PWTimeoutError, sync_playw
 
 LOGIN_URL = "https://pms.innto.jp/login.html"
 REPORT_URL = os.getenv("REPORT_URL", "https://pms.innto.jp/#report/ope-status")
+INNTO_REQUIRED_ENVS = ("INNTO_HOTEL_ID", "INNTO_ACCOUNT", "INNTO_PASSWORD")
+ENV_SETUP_HINT = (
+    "Please set repository secrets in GitHub:\n"
+    "  Settings -> Secrets and variables -> Actions -> New repository secret"
+)
 
 
 @dataclass(frozen=True)
@@ -23,11 +28,22 @@ class TargetMonth:
         return f"{self.year:04d}-{self.month:02d}"
 
 
+def find_missing_env(names: tuple[str, ...]) -> list[str]:
+    return [name for name in names if not os.getenv(name)]
+
+
+def validate_required_envs(names: tuple[str, ...] = INNTO_REQUIRED_ENVS) -> None:
+    missing = find_missing_env(names)
+    if missing:
+        missing_text = ", ".join(missing)
+        raise RuntimeError(f"Missing required env: {missing_text}\n{ENV_SETUP_HINT}")
+
+
 def required_env(name: str) -> str:
     value = os.getenv(name)
     if not value:
-        raise RuntimeError(f"environment variable is required: {name}")
-    return value
+        validate_required_envs((name,))
+    return value or ""
 
 
 def target_months(base: date | None = None) -> list[TargetMonth]:
@@ -90,6 +106,7 @@ def download_csv(page: Page, month: TargetMonth, download_dir: Path, run_tag: st
 
 
 def fetch_monthly_csv() -> list[tuple[TargetMonth, Path]]:
+    validate_required_envs()
     out_dir = resolve_download_dir()
     run_tag = date.today().isoformat()
     months = target_months()
@@ -118,5 +135,9 @@ def fetch_monthly_csv() -> list[tuple[TargetMonth, Path]]:
 
 
 if __name__ == "__main__":
-    for m, path in fetch_monthly_csv():
-        print(m.key, path)
+    try:
+        for m, path in fetch_monthly_csv():
+            print(m.key, path)
+    except RuntimeError as exc:
+        print(str(exc))
+        raise SystemExit(2)
