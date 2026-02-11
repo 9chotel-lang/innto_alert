@@ -1,0 +1,14 @@
+# innto credentials (required)
+INNTO_HOTEL_ID=
+INNTO_ACCOUNT=
+INNTO_PASSWORD=
+
+# report page URL
+REPORT_URL=https://innto.jp/report/ope-status
+
+# optional: defaults to temp directory if omitted
+DOWNLOAD_DIR=
+
+# worker ingest endpoint/auth (required)
+WORKER_INGEST_URL=
+WORKER_TOKEN=
