@@ -18,6 +18,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Validate required INNTO secrets
+        env:
+          INNTO_HOTEL_ID: ${{ secrets.INNTO_HOTEL_ID }}
+          INNTO_ACCOUNT: ${{ secrets.INNTO_ACCOUNT }}
+          INNTO_PASSWORD: ${{ secrets.INNTO_PASSWORD }}
+        run: |
+          missing=()
+          [ -n "$INNTO_HOTEL_ID" ] || missing+=("INNTO_HOTEL_ID")
+          [ -n "$INNTO_ACCOUNT" ] || missing+=("INNTO_ACCOUNT")
+          [ -n "$INNTO_PASSWORD" ] || missing+=("INNTO_PASSWORD")
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "Missing required env: ${missing[*]}"
+            echo "Please set repository secrets in GitHub:"
+            echo "  Settings -> Secrets and variables -> Actions -> New repository secret"
+            exit 2
+          fi
+
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
