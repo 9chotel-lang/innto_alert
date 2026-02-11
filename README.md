@@ -92,3 +92,20 @@ UI機能:
 
 `.github/workflows/run_check.yml` は30分 cron + 手動実行を定義しています。
 Secrets 設定後に利用してください。Playwright/サイト依存で不安定な場合があります。
+
+
+## トラブルシュート
+
+### 1) Actions で `INNTO_HOTEL_ID` 不足エラー
+- 必須Secrets（名前固定）を設定してください。
+  - `INNTO_HOTEL_ID`
+  - `INNTO_ACCOUNT`
+  - `INNTO_PASSWORD`
+- 設定場所: `Settings -> Secrets and variables -> Actions -> New repository secret`
+- `innto check` ワークフローは不足時に `Missing required env: ...` を表示して終了コード `2` で停止します。
+
+### 2) Pages が `No such file or directory @ dir_chdir0 - /github/workspace/docs`
+- 既定の Pages ブランチ配信（`/docs`）で起きるエラーです。
+- このリポジトリでは `deploy pages` ワークフローを追加済みです。
+  - `Settings -> Pages -> Build and deployment` で `Source` を **GitHub Actions** に変更してください。
+- 互換用に `docs/` にも同じ静的ファイルを置いていますが、推奨は `GitHub Actions` 配信です。
