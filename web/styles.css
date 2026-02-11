@@ -1,0 +1,11 @@
+:root { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+body { margin: 0; background: #f5f7fb; color: #1d2939; }
+main { max-width: 920px; margin: 0 auto; padding: 16px; }
+header { display: flex; justify-content: space-between; align-items: center; }
+button { border: none; border-radius: 8px; padding: 8px 12px; background: #1d4ed8; color: #fff; cursor: pointer; }
+.month { background: #fff; border-radius: 12px; padding: 12px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(15,23,42,.08); }
+table { width: 100%; border-collapse: collapse; }
+th, td { border-bottom: 1px solid #e5e7eb; padding: 8px; text-align: left; }
+.today { background: #fef9c3; font-weight: 700; }
+.badge { display: inline-block; font-size: 12px; padding: 2px 6px; border-radius: 99px; background: #fecaca; color: #991b1b; }
+.notice { background: #fff; border-radius: 12px; padding: 12px; }

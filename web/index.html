@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>innto 空室モニター</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script type="module" src="./app.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>空室モニター（当月＋次月）</h1>
+        <button id="refreshBtn">更新</button>
+      </header>
+      <p id="updatedAt">更新時刻: -</p>
+      <section id="tables"></section>
+      <section class="notice">
+        <h2>通知購読</h2>
+        <button id="subscribeBtn">通知を購読</button>
+        <p>iOS Safari は「ホーム画面に追加」後のみ Web Push が利用できます。</p>
+      </section>
+    </main>
+  </body>
+</html>

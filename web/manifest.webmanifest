@@ -1,0 +1,9 @@
+{
+  "name": "innto 空室モニター",
+  "short_name": "空室モニター",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#1d4ed8",
+  "icons": []
+}
