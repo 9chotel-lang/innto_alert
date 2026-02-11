@@ -1,0 +1,29 @@
+name: innto check
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install playwright
+          python -m playwright install chromium
+      - name: Run check
+        env:
+          INNTO_HOTEL_ID: ${{ secrets.INNTO_HOTEL_ID }}
+          INNTO_ACCOUNT: ${{ secrets.INNTO_ACCOUNT }}
+          INNTO_PASSWORD: ${{ secrets.INNTO_PASSWORD }}
+          REPORT_URL: ${{ secrets.REPORT_URL }}
+          WORKER_INGEST_URL: ${{ secrets.WORKER_INGEST_URL }}
+          WORKER_TOKEN: ${{ secrets.WORKER_TOKEN }}
+        run: python scripts/run_check.py

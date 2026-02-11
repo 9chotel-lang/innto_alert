@@ -1,0 +1,13 @@
+name = "innto-alert-worker"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[[kv_namespaces]]
+binding = "STATE_KV"
+id = "PUT_PROD_KV_ID"
+preview_id = "PUT_PREVIEW_KV_ID"
+
+[vars]
+# set via wrangler secret put for production tokens
+# WORKER_TOKEN = ""
+# ONESIGNAL_APP_ID = ""
